@@ -38,6 +38,11 @@ st.subheader("📍 Mapa de Qualidade do Pavimento")
 df_mapa = df.dropna(subset=["lat", "lon"])
 df_mapa = df_mapa[(df_mapa["lat"] != 0) & (df_mapa["lon"] != 0)]
 
+# Coordenadas iniciais fixas (Campo Grande -MS) e nível de zoom
+LAT_INICIAL = -20.4697
+LON_INICIAL = -54.6201
+ZOOM_INICIAL = 13
+
 if not df_mapa.empty:
     fig_mapa = px.scatter_map(
         df_mapa,
@@ -47,7 +52,8 @@ if not df_mapa.empty:
         size="rms",
         color_continuous_scale=["green", "yellow", "red"],
         hover_data=["device", "speed_kmh", "rms", "ts"],
-        zoom=14,
+        center={"lat": LAT_INICIAL, "lon": LON_INICIAL},
+        zoom=ZOOM_INICIAL,
         height=500,
     )
     fig_mapa.update_layout(map_style="open-street-map", margin={"r": 0, "t": 0, "l": 0, "b": 0})
