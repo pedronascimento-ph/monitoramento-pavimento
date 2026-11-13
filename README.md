@@ -6,7 +6,7 @@ Protótipo de telemetria veicular em tempo real para avaliação da qualidade e 
 
 ## 📌 Visão Geral do Projeto
 
-O sistema coleta dados de vibração vertical e geolocalização a **100 Hz**, calcula o **RMS (Root Mean Square)** da aceleração em janelas de 1 segundo e transmite os pacotes de forma assíncrona via **MQTT (TLS)** para armazenamento em banco de dados na nuvem e visualização interativa em mapa.
+O sistema coleta dados de vibração triaxial e geolocalização a **100 Hz**, calcula o **RMS (Root Mean Square)** combinado dos três eixos em janelas de 1 segundo e transmite os pacotes de forma assíncrona via **MQTT (TLS)** para armazenamento em banco de dados na nuvem e visualização interativa em mapa.
 
 ### ✨ Principais Funcionalidades
 * **Processamento Dual-Core no ESP32:** O Núcleo 1 realiza a leitura contínua dos sensores sem interrupções, enquanto o Núcleo 0 gerencia a conexão Wi-Fi e o envio MQTT.
@@ -39,7 +39,7 @@ O sistema coleta dados de vibração vertical e geolocalização a **100 Hz**, c
 | :--- | :--- | :--- | :--- |
 | **Acelerômetro (MPU6050/6500)** | `SDA` | `GPIO 21` | Barramento I2C |
 | **Acelerômetro (MPU6050/6500)** | `SCL` | `GPIO 22` | Barramento I2C |
-| **Módulo GPS** | `TX` | `GPIO 16` | UART2 RX (9600 bps) |
+| **Módulo GPS** | `TX` | `GPIO 19` | UART2 RX (9600 bps) |
 | **LED de Status** | Ânodo (+) | `GPIO 18` | Usar resistor em série para GND |
 | **Alimentação Geral** | `VCC` / `GND` | `3V3` / `GND` | Operação em 3,3 V |
 
@@ -53,6 +53,7 @@ O sistema coleta dados de vibração vertical e geolocalização a **100 Hz**, c
 
 ## 🗂️ Estrutura do Repositório
 
+* `firmware/monitoramento_pavimento.ino`: Código-fonte em C++ (Arduino IDE / FreeRTOS) embarcado no ESP32 para leitura dos sensores, cálculo de RMS na borda e envio via MQTT/TLS.
 * `app.py`: Aplicação web desenvolvida em Python com **Streamlit** e **Plotly** para visualização dos indicadores, gráficos e mapa interativo.
 * `requirements.txt`: Lista de dependências Python utilizadas para o deploy no Streamlit Cloud.
 * `README.md`: Documentação técnica do projeto.
