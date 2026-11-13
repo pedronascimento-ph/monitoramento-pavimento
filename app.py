@@ -31,9 +31,9 @@ if selecionado != "Todos":
 df = df[df["speed_kmh"] >= 5.0].copy()
 
 def classificar_pavimento(rms):
-    if rms < 1.30:
+    if rms < 1.45:
         return "Bom"
-    elif rms <= 1.80:
+    elif rms <= 2.00:
         return "Regular"
     else:
         return "Ruim"
